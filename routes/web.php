@@ -2,14 +2,35 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\SocialiteController;
+// Halaman Pertama (Langsung Login)
+Route::get('/', function () {
+    return view('login');
+});
 
-// Route OAuth Socialite
-Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('social.redirect');
-Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('social.callback');
+// Route Login
 Route::get('/login', function () {
     return view('login');
 });
-Route::get('/register', function () {
-    return view('register');
+Route::post('/login', function () {
+    return redirect('/dashboard');
+});
+
+// Route Dashboard
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
+// Route Kelompok / Team
+Route::get('/kelompok', function () {
+    return view('kelompok');
+});
+
+// Route Jadwal
+Route::get('/jadwal', function () {
+    return view('jadwal');
+});
+
+// Route Tasks
+Route::get('/tasks', function () {
+    return view('tasks');
 });
