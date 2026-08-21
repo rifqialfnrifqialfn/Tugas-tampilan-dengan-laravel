@@ -1,88 +1,119 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - XII RPL 2</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - XII RPL 2 AdminLTE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .floating-nav {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px;
-            padding: 8px 16px; display: flex; align-items: center; gap: 12px; z-index: 9999;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-        }
-        .floating-nav .nav-item { color: #94a3b8; text-decoration: none; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.3s; }
-        .floating-nav .nav-item:hover { color: #ffffff; background: rgba(255, 255, 255, 0.05); }
-        .floating-nav .nav-item.active { color: #ffffff; background: #0284c7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
+      * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+      body { background: #f4f6f9; color: #333; display: flex; min-height: 100vh; }
+
+      /* SIDEBAR KIRI */
+      .sidebar { width: 250px; background: #343a40; color: #fff; flex-shrink: 0; display: flex; flex-direction: column; }
+      .sidebar .brand { padding: 20px; font-size: 1.2rem; font-weight: bold; background: #212529; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #4b545c; }
+      .sidebar-menu { list-style: none; padding: 15px 0; }
+      .sidebar-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: #c2c7d0; text-decoration: none; font-size: 0.95rem; transition: 0.2s; }
+      .sidebar-menu a:hover, .sidebar-menu a.active { background: #007bff; color: #fff; }
+
+      /* CONTENT AREA */
+      .main-content { flex-grow: 1; display: flex; flex-direction: column; }
+      .topbar { background: #fff; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #dee2e6; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+      .content { padding: 25px; }
+
+      /* CARDS GRID */
+      .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 25px; }
+      .card-box { background: #fff; border-radius: 8px; padding: 20px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; }
+      .card-box i { font-size: 2.5rem; color: #007bff; }
+      .card-box h4 { font-size: 1.8rem; color: #1e293b; }
+      .card-box p { font-size: 0.85rem; color: #64748b; margin-top: 4px; }
+
+      /* PANELS */
+      .glass-panel { background: #fff; border-radius: 8px; border: 1px solid #e2e8f0; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+      .panel-title { font-size: 1rem; font-weight: bold; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+      .status-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px; }
+      .status-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; }
+      .status-card small { color: #64748b; font-size: 0.75rem; font-weight: bold; }
+      .status-card p { color: #007bff; font-weight: bold; font-size: 0.95rem; margin-top: 4px; }
+
+      .btn-logout { background: #dc3545; color: #fff; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+      .btn-logout:hover { background: #bd2130; }
     </style>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen p-6 pb-28">
+  </head>
+  <body>
 
-    <div class="max-w-6xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8 flex justify-between items-center">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="brand"><i class="bi bi-cloud-fill"></i> XII RPL 2 AdminLTE</div>
+      <ul class="sidebar-menu">
+        <li><a href="/dashboard" class="active"><i class="bi bi-grid-fill"></i> Dashboard</a></li>
+        <li><a href="/kelompok"><i class="bi bi-people-fill"></i> Kelompok</a></li>
+        <li><a href="/jadwal"><i class="bi bi-calendar-event-fill"></i> Jadwal</a></li>
+        <li><a href="/tasks"><i class="bi bi-check2-square"></i> Tasks</a></li>
+      </ul>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="topbar">
+        <h3>Dashboard Overview</h3>
+        <a href="/logout" class="btn-logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+      </div>
+
+      <div class="content">
+        <div class="cards-grid">
+          <div class="card-box">
             <div>
-                <h1 class="text-3xl font-bold text-white flex items-center gap-3">
-                    <i class="bi bi-grid-fill text-sky-400"></i> Dashboard Utama
-                </h1>
-                <p class="text-slate-400 text-sm mt-1">Ringkasan Aktivitas dan Informasi Kelompok XII RPL 2</p>
+              <h4>36</h4>
+              <p>Total Siswa RPL 2</p>
             </div>
-            <span class="text-xs bg-slate-900 border border-slate-800 text-slate-400 px-3 py-1.5 rounded-full">Tahun Ajaran 2026</span>
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <div class="card-box">
+            <div>
+              <h4>12</h4>
+              <p>Mata Pelajaran</p>
+            </div>
+            <i class="bi bi-journal-bookmark-fill"></i>
+          </div>
+          <div class="card-box">
+            <div>
+              <h4>5</h4>
+              <p>Tugas Aktif</p>
+            </div>
+            <i class="bi bi-list-task"></i>
+          </div>
+          <div class="card-box">
+            <div>
+              <h4>100%</h4>
+              <p>Presensi Kelas</p>
+            </div>
+            <i class="bi bi-award-fill"></i>
+          </div>
         </div>
 
-        <!-- Cards Metrics -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 backdrop-blur-md">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Anggota</span>
-                    <div class="w-10 h-10 bg-sky-500/10 text-sky-400 rounded-xl flex items-center justify-center border border-sky-500/20"><i class="bi bi-people text-xl"></i></div>
-                </div>
-                <h2 class="text-3xl font-bold text-white">5 Orang</h2>
-                <a href="/kelompok" class="inline-flex items-center gap-1 text-xs text-sky-400 hover:text-sky-300 mt-3 transition">Lihat Tim <i class="bi bi-arrow-right"></i></a>
-            </div>
-
-            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 backdrop-blur-md">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Jadwal</span>
-                    <div class="w-10 h-10 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center border border-emerald-500/20"><i class="bi bi-calendar-week text-xl"></i></div>
-                </div>
-                <h2 class="text-3xl font-bold text-white">5 Hari</h2>
-                <a href="/jadwal" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 mt-3 transition">Cek Jadwal <i class="bi bi-arrow-right"></i></a>
-            </div>
-
-            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 backdrop-blur-md">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pending Tasks</span>
-                    <div class="w-10 h-10 bg-amber-500/10 text-amber-400 rounded-xl flex items-center justify-center border border-amber-500/20"><i class="bi bi-clock-history text-xl"></i></div>
-                </div>
-                <h2 class="text-3xl font-bold text-white">4 Tugas</h2>
-                <a href="/tasks" class="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 mt-3 transition">Kelola Tasks <i class="bi bi-arrow-right"></i></a>
-            </div>
-
-            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 backdrop-blur-md">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Proyek Web</span>
-                    <div class="w-10 h-10 bg-purple-500/10 text-purple-400 rounded-xl flex items-center justify-center border border-purple-500/20"><i class="bi bi-code-slash text-xl"></i></div>
-                </div>
-                <h2 class="text-3xl font-bold text-white">Laravel 13</h2>
-                <span class="inline-block text-xs text-purple-400 mt-3">AdminLTE Dark Theme</span>
-            </div>
+        <div class="glass-panel" style="border-left: 4px solid #007bff;">
+          <div class="panel-title"><i class="bi bi-megaphone-fill" style="color: #007bff;"></i> Pengumuman Utama Kelas</div>
+          <p style="font-size: 0.9rem; color: #475569; line-height: 1.5;">
+            Selamat datang di Sistem Informasi XII RPL 2! Semua modul praktikum, jadwal pelajaran mingguan, dan penugasan kelompok telah diperbarui. Silakan manfaatkan menu navigasi di sebelah kiri.
+          </p>
         </div>
+
+        <div class="glass-panel" style="border-left: 4px solid #28a745;">
+          <div class="panel-title"><i class="bi bi-cpu-fill" style="color: #28a745;"></i> Status Lingkungan Kerja (Environment)</div>
+          <div class="status-grid">
+            <div class="status-card">
+              <small>WEB SERVER</small>
+              <p><i class="bi bi-hdd-network-fill"></i> PHP Artisan Serve (Port 8000)</p>
+            </div>
+            <div class="status-card">
+              <small>FRAMEWORK VERSION</small>
+              <p><i class="bi bi-layers-fill"></i> Laravel v13 Modern UI</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- FLOATING NAVIGATION -->
-    <div class="floating-nav">
-        <a href="/login" class="nav-item"><i class="bi bi-box-arrow-in-right"></i><span>Login</span></a>
-        <a href="/kelompok" class="nav-item"><i class="bi bi-people-fill"></i><span>Team</span></a>
-        <a href="/dashboard" class="nav-item active"><i class="bi bi-grid-fill"></i><span>Dashboard</span></a>
-        <a href="/jadwal" class="nav-item"><i class="bi bi-calendar-event-fill"></i><span>Jadwal</span></a>
-        <a href="/tasks" class="nav-item"><i class="bi bi-check2-square"></i><span>Tasks</span></a>
-    </div>
-
-</body>
+  </body>
 </html>

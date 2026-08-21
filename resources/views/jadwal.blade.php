@@ -1,166 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jadwal Pelajaran - XII RPL 2</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jadwal - XII RPL 2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .floating-nav {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px;
-            padding: 8px 16px; display: flex; align-items: center; gap: 12px; z-index: 9999;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-        }
-        .floating-nav .nav-item { color: #94a3b8; text-decoration: none; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.3s; }
-        .floating-nav .nav-item:hover { color: #ffffff; background: rgba(255, 255, 255, 0.05); }
-        .floating-nav .nav-item.active { color: #ffffff; background: #0284c7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
+      * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+      body { background: radial-gradient(circle at center, #edf6fc 0%, #d4e8f3 100%); min-height: 100vh; color: #1a3e54; padding: 30px 20px 100px 20px; display: flex; justify-content: center; }
+      .main-wrapper { width: 100%; max-width: 1280px; animation: fadeInUp 0.5s ease forwards; }
+      @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+      .brand-title { font-size: 1.3rem; font-weight: 800; color: #0284c7; display: flex; align-items: center; gap: 10px; }
+      .btn-logout { background: #ef4444; color: white; padding: 8px 16px; border-radius: 12px; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+
+      .table-box { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); border-radius: 20px; border: 1.5px solid rgba(255, 255, 255, 0.9); padding: 25px; box-shadow: 0 10px 25px rgba(27, 86, 118, 0.08); }
+      table { width: 100%; border-collapse: collapse; text-align: left; }
+      th, td { padding: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.6); font-size: 0.95rem; }
+      th { color: #0284c7; font-weight: 800; }
+      .badge { padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; background: #e0f2fe; color: #0284c7; }
+
+      .bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border: 1.5px solid rgba(255, 255, 255, 0.95); border-radius: 30px; padding: 10px 25px; display: flex; gap: 15px; box-shadow: 0 15px 35px rgba(27, 86, 118, 0.15); z-index: 999; }
+      .bottom-nav a { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #437691; padding: 10px 20px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; }
+      .bottom-nav a.active, .bottom-nav a:hover { background: rgba(56, 189, 248, 0.25); color: #0284c7; }
     </style>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen p-6 pb-28">
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="top-header">
+        <div class="brand-title"><i class="bi bi-calendar-event-fill"></i> Jadwal Pelajaran</div>
+        <a href="/logout" class="btn-logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+      </div>
 
-    <div class="max-w-6xl mx-auto">
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-white flex items-center gap-3">
-                <i class="bi bi-calendar-event-fill text-sky-400"></i> Jadwal Pelajaran Mingguan
-            </h1>
-            <p class="text-slate-400 text-sm mt-1">Kelas XII RPL 2 - Jam Pelajaran (JP) & Pengajar</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            
-            <!-- Senin -->
-            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md">
-                <div class="bg-sky-600/20 border-b border-sky-500/20 px-5 py-3.5 font-bold text-sky-400 flex items-center gap-2">
-                    <i class="bi bi-calendar-day"></i> Senin
-                </div>
-                <div class="p-4 space-y-3">
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-slate-200">B. Indonesia</p><p class="text-xs text-slate-500">Bu Tita</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">3 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-slate-200">PAI</p><p class="text-xs text-slate-500">Bu Laela</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">1 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-sky-400">Basis Data</p><p class="text-xs text-slate-500">Bu Indri</p></div>
-                        <span class="text-xs bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-1 rounded">5 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm">
-                        <div><p class="font-medium text-slate-200">B. Jerman</p><p class="text-xs text-slate-500">Pak Abdul</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">1 JP</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Selasa -->
-            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md">
-                <div class="bg-sky-600/20 border-b border-sky-500/20 px-5 py-3.5 font-bold text-sky-400 flex items-center gap-2">
-                    <i class="bi bi-calendar-day"></i> Selasa
-                </div>
-                <div class="p-4 space-y-3">
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-slate-200">PAI</p><p class="text-xs text-slate-500">Bu Laela</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">2 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-slate-200">Matematika</p><p class="text-xs text-slate-500">Pak Acun</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">2 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-slate-200">PPS</p><p class="text-xs text-slate-500">Bu Vanny</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">2 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-slate-200">Psikotes</p><p class="text-xs text-slate-500">Bu Putri</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">2 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm">
-                        <div><p class="font-medium text-slate-200">Persiapan Fisik</p><p class="text-xs text-slate-500">Pak Asep</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">2 JP</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Rabu -->
-            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md">
-                <div class="bg-sky-600/20 border-b border-sky-500/20 px-5 py-3.5 font-bold text-sky-400 flex items-center gap-2">
-                    <i class="bi bi-calendar-day"></i> Rabu
-                </div>
-                <div class="p-4 space-y-3">
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-sky-400">KIK</p><p class="text-xs text-slate-500">Pak Gunawan</p></div>
-                        <span class="text-xs bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-1 rounded">5 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-slate-200">B. Inggris</p><p class="text-xs text-slate-500">Ms. Monica</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">1 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm">
-                        <div><p class="font-medium text-sky-400">KPB</p><p class="text-xs text-slate-500">Pak Gunawan</p></div>
-                        <span class="text-xs bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-1 rounded">4 JP</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kamis -->
-            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md">
-                <div class="bg-sky-600/20 border-b border-sky-500/20 px-5 py-3.5 font-bold text-sky-400 flex items-center gap-2">
-                    <i class="bi bi-calendar-day"></i> Kamis
-                </div>
-                <div class="p-4 space-y-3">
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-sky-400">KPM</p><p class="text-xs text-slate-500">Bu Dhian</p></div>
-                        <span class="text-xs bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-1 rounded">6 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-slate-200">B. Jerman</p><p class="text-xs text-slate-500">Pak Abdul</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">1 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm">
-                        <div><p class="font-medium text-slate-200">B. Inggris</p><p class="text-xs text-slate-500">Ms. Monica</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">3 JP</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Jumat -->
-            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md">
-                <div class="bg-sky-600/20 border-b border-sky-500/20 px-5 py-3.5 font-bold text-sky-400 flex items-center gap-2">
-                    <i class="bi bi-calendar-day"></i> Jumat
-                </div>
-                <div class="p-4 space-y-3">
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-slate-200">Pembimbingan Walas</p><p class="text-xs text-slate-500">Wali Kelas</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">-</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm border-b border-slate-800/60 pb-2">
-                        <div><p class="font-medium text-sky-400">KPW</p><p class="text-xs text-slate-500">Pak Jumadi</p></div>
-                        <span class="text-xs bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-1 rounded">7 JP</span>
-                    </div>
-                    <div class="flex justify-between items-center text-sm">
-                        <div><p class="font-medium text-slate-200">Matematika</p><p class="text-xs text-slate-500">Pak Acun</p></div>
-                        <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">1 JP</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+      <div class="table-box">
+        <table>
+          <thead>
+            <tr><th>Hari</th><th>Jam</th><th>Mata Pelajaran</th><th>Pengajar</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Senin</td><td>07:00 - 10:00</td><td>Pemrograman Web (Laravel 13)</td><td><span class="badge">Pak Pakhrul</span></td></tr>
+            <tr><td>Selasa</td><td>08:00 - 11:00</td><td>Basis Data (MySQL)</td><td><span class="badge">Bu Rina</span></td></tr>
+            <tr><td>Rabu</td><td>10:00 - 13:00</td><td>PBO (Java)</td><td><span class="badge">Pak Dedi</span></td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- FLOATING NAVIGATION -->
-    <div class="floating-nav">
-        <a href="/login" class="nav-item"><i class="bi bi-box-arrow-in-right"></i><span>Login</span></a>
-        <a href="/kelompok" class="nav-item"><i class="bi bi-people-fill"></i><span>Team</span></a>
-        <a href="/dashboard" class="nav-item"><i class="bi bi-grid-fill"></i><span>Dashboard</span></a>
-        <a href="/jadwal" class="nav-item active"><i class="bi bi-calendar-event-fill"></i><span>Jadwal</span></a>
-        <a href="/tasks" class="nav-item"><i class="bi bi-check2-square"></i><span>Tasks</span></a>
+    <div class="bottom-nav">
+      <a href="/dashboard"><i class="bi bi-grid-fill"></i> Dashboard</a>
+      <a href="/kelompok"><i class="bi bi-people-fill"></i> Kelompok</a>
+      <a href="/jadwal" class="active"><i class="bi bi-calendar-event-fill"></i> Jadwal</a>
+      <a href="/tasks"><i class="bi bi-check2-square"></i> Tasks</a>
     </div>
-
-</body>
+  </body>
 </html>

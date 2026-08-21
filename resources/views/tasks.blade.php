@@ -1,93 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Tugas - XII RPL 2</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasks - XII RPL 2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .floating-nav {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px;
-            padding: 8px 16px; display: flex; align-items: center; gap: 12px; z-index: 9999;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-        }
-        .floating-nav .nav-item { color: #94a3b8; text-decoration: none; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.3s; }
-        .floating-nav .nav-item:hover { color: #ffffff; background: rgba(255, 255, 255, 0.05); }
-        .floating-nav .nav-item.active { color: #ffffff; background: #0284c7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
+      * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+      body { background: radial-gradient(circle at center, #edf6fc 0%, #d4e8f3 100%); min-height: 100vh; color: #1a3e54; padding: 30px 20px 100px 20px; display: flex; justify-content: center; }
+      .main-wrapper { width: 100%; max-width: 1280px; animation: fadeInUp 0.5s ease forwards; }
+      @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+      .brand-title { font-size: 1.3rem; font-weight: 800; color: #0284c7; display: flex; align-items: center; gap: 10px; }
+      .btn-logout { background: #ef4444; color: white; padding: 8px 16px; border-radius: 12px; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+
+      .task-list { display: flex; flex-direction: column; gap: 16px; }
+      .task-item { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); border-radius: 18px; border: 1.5px solid rgba(255, 255, 255, 0.9); padding: 22px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 25px rgba(27, 86, 118, 0.08); }
+      .task-info h4 { font-size: 1.05rem; color: #0d384d; margin-bottom: 4px; }
+      .task-info p { font-size: 0.85rem; color: #55839c; }
+      .badge-urgent { background: #fee2e2; color: #ef4444; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+      .badge-progress { background: #fef3c7; color: #d97706; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+
+      .bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border: 1.5px solid rgba(255, 255, 255, 0.95); border-radius: 30px; padding: 10px 25px; display: flex; gap: 15px; box-shadow: 0 15px 35px rgba(27, 86, 118, 0.15); z-index: 999; }
+      .bottom-nav a { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #437691; padding: 10px 20px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; }
+      .bottom-nav a.active, .bottom-nav a:hover { background: rgba(56, 189, 248, 0.25); color: #0284c7; }
     </style>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen p-6 pb-28" x-data="{ 
-    tasks: [
-        { id: 1, title: 'Pembuatan Sistem KPM (Bu Dhian)', dev: 'Rifqi & Tim', done: false },
-        { id: 2, title: 'Ujian Bahasa Inggris (Ms. Monica)', dev: 'Semua Anggota', done: false },
-        { id: 3, title: 'Tugas Proyek KIK (Pak Gunawan)', dev: 'Dafa & Dimas', done: false },
-        { id: 4, title: 'Video Bahasa Jerman (Pak Abdul)', dev: 'Aulia & Gavrila', done: false }
-    ],
-    newTask: '',
-    newDev: 'Rifqi',
-    addTask() {
-        if(this.newTask.trim() !== '') {
-            this.tasks.push({ id: Date.now(), title: this.newTask, dev: this.newDev, done: false });
-            this.newTask = '';
-        }
-    }
-}">
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="top-header">
+        <div class="brand-title"><i class="bi bi-check2-square"></i> Daftar Tugas</div>
+        <a href="/logout" class="btn-logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+      </div>
 
-    <div class="max-w-4xl mx-auto">
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-white flex items-center gap-3">
-                <i class="bi bi-check2-square text-sky-400"></i> Task Manager Kelompok
-            </h1>
-            <p class="text-slate-400 text-sm mt-1">Daftar Tugas Kelompok & Sekolah XII RPL 2</p>
+      <div class="task-list">
+        <div class="task-item">
+          <div class="task-info">
+            <h4>Slice AdminLTE Bottom Nav ke Laravel 13</h4>
+            <p>Deadline: Hari Ini • Pemrograman Web</p>
+          </div>
+          <span class="badge-urgent">Urgent</span>
         </div>
-
-        <!-- Form Tambah -->
-        <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 mb-6 flex flex-col sm:flex-row gap-3 backdrop-blur-md">
-            <input type="text" x-model="newTask" @keydown.enter="addTask()" placeholder="Tulis tugas baru..." class="flex-1 bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-sky-500">
-            <select x-model="newDev" class="bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-sky-500">
-                <option value="Rifqi">Rifqi</option>
-                <option value="Dafa">Dafa</option>
-                <option value="Gavrila">Gavrila</option>
-                <option value="Aulia">Aulia</option>
-                <option value="Dimas">Dimas</option>
-            </select>
-            <button @click="addTask()" class="bg-sky-600 hover:bg-sky-500 text-white font-medium px-5 py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2">
-                <i class="bi bi-plus-lg"></i>
-                <span>Tambah</span>
-            </button>
+        <div class="task-item">
+          <div class="task-info">
+            <h4>Membuat ERD Database Perpustakaan</h4>
+            <p>Deadline: Besok • Basis Data</p>
+          </div>
+          <span class="badge-progress">In Progress</span>
         </div>
-
-        <!-- List Tasks -->
-        <div class="space-y-3">
-            <template x-for="(task, index) in tasks" :key="task.id">
-                <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex items-center justify-between transition backdrop-blur-md" :class="{ 'opacity-40 line-through': task.done }">
-                    <div class="flex items-center gap-3">
-                        <input type="checkbox" x-model="task.done" class="w-5 h-5 rounded border-slate-700 bg-slate-950 text-sky-600 focus:ring-0 cursor-pointer">
-                        <span class="text-sm font-medium text-slate-200" x-text="task.title"></span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs bg-slate-800 text-slate-400 px-2.5 py-1 rounded-md border border-slate-700/50" x-text="task.dev"></span>
-                        <button @click="tasks.splice(index, 1)" class="text-red-400 hover:text-red-300 p-1 transition"><i class="bi bi-trash"></i></button>
-                    </div>
-                </div>
-            </template>
-        </div>
+      </div>
     </div>
 
-    <!-- FLOATING NAVIGATION -->
-    <div class="floating-nav">S
-        <a href="/login" class="nav-item"><i class="bi bi-box-arrow-in-right"></i><span>Login</span></a>
-        <a href="/kelompok" class="nav-item"><i class="bi bi-people-fill"></i><span>Team</span></a>
-        <a href="/dashboard" class="nav-item"><i class="bi bi-grid-fill"></i><span>Dashboard</span></a>
-        <a href="/jadwal" class="nav-item"><i class="bi bi-calendar-event-fill"></i><span>Jadwal</span></a>
-        <a href="/tasks" class="nav-item active"><i class="bi bi-check2-square"></i><span>Tasks</span></a>
+    <div class="bottom-nav">
+      <a href="/dashboard"><i class="bi bi-grid-fill"></i> Dashboard</a>
+      <a href="/kelompok"><i class="bi bi-people-fill"></i> Kelompok</a>
+      <a href="/jadwal"><i class="bi bi-calendar-event-fill"></i> Jadwal</a>
+      <a href="/tasks" class="active"><i class="bi bi-check2-square"></i> Tasks</a>
     </div>
-
-</body>
+  </body>
 </html>
